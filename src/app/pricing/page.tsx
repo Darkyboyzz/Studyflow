@@ -1,16 +1,17 @@
 import { Header } from '@/components/landing/header'
-import { Hero } from '@/components/landing/hero'
-import { Features } from '@/components/landing/features'
 import { Pricing } from '@/components/landing/pricing'
 import { Footer } from '@/components/landing/footer'
 
-export default function HomePage() {
+export const metadata = {
+  title: 'Pricing - StudyFlow',
+  description: 'Simple, transparent pricing for StudyFlow. Start free, upgrade when you need more.',
+}
+
+export default function PricingPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
-        <Hero />
-        <Features />
         <Pricing />
       </main>
       <Footer />
