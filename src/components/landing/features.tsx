@@ -61,37 +61,40 @@ const features = [
 
 export function Features() {
   return (
-    <section id="features" className="py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center mb-16">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+    <section id="features" className="py-24 sm:py-32 relative">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+      
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center mb-20">
+          <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl mb-6">
             Everything you need to{' '}
             <span className="gradient-text">ace your semester</span>
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Simple, focused tools that help you stay organized and productive.
+          <p className="mt-4 text-xl text-muted-foreground font-medium">
+            Simple, focused tools that help you stay organized and productive without the clutter.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature) => (
             <Card
               key={feature.title}
-              className="group relative overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
+              className="group relative overflow-hidden glass border-white/10 dark:border-white/5 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 bg-gradient-to-b from-background/80 to-background/40 backdrop-blur-xl"
             >
-              <CardHeader>
-                <div className={`mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl ${feature.bg} transition-transform group-hover:scale-110`}>
-                  <feature.icon className={`h-6 w-6 ${feature.color}`} />
+              <CardHeader className="pb-4">
+                <div className={`mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl ${feature.bg} shadow-inner transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}>
+                  <feature.icon className={`h-7 w-7 ${feature.color}`} />
                 </div>
-                <CardTitle className="text-lg">{feature.title}</CardTitle>
+                <CardTitle className="text-xl font-bold tracking-tight">{feature.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-sm leading-relaxed">
+                <CardDescription className="text-base leading-relaxed text-muted-foreground/80 group-hover:text-muted-foreground transition-colors">
                   {feature.description}
                 </CardDescription>
               </CardContent>
-              {/* Hover gradient line */}
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/0 via-primary to-primary/0 opacity-0 transition-opacity group-hover:opacity-100" />
+              {/* Hover gradient sweep */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-[150%] skew-x-[-20deg] group-hover:animate-[shineEffect_1.5s_ease-out_forwards]" />
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
             </Card>
           ))}
         </div>

@@ -22,6 +22,12 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
 
+    if (!supabase) {
+      toast.error('Supabase configuration is missing. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your .env.local file.')
+      setLoading(false)
+      return
+    }
+
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
