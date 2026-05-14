@@ -5,7 +5,7 @@ export async function createClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-  if (!url || !key) {
+  if (!url || !key || url.includes('your_supabase_url') || !url.startsWith('http')) {
     return null as unknown as ReturnType<typeof createServerClient>
   }
 
