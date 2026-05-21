@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudyFlow - Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#fdf7ff",
+                        "tertiary-container": "#c9a74d",
+                        "surface-container-highest": "#e6e0e9",
+                        "surface-container-low": "#f8f2fa",
+                        "on-tertiary-fixed-variant": "#594400",
+                        "inverse-on-surface": "#f5eff7",
+                        "on-surface": "#1d1b20",
+                        "on-primary-container": "#e0d2ff",
+                        "on-primary-fixed-variant": "#4f378a",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#322f35",
+                        "on-tertiary-fixed": "#241a00",
+                        "surface": "#fdf7ff",
+                        "background": "#fdf7ff",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#6750a4",
+                        "primary-container": "#6750a4",
+                        "surface-variant": "#e6e0e9",
+                        "on-tertiary-container": "#503d00",
+                        "outline": "#7a7582",
+                        "outline-variant": "#cbc4d2",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#645a7d",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed": "#22005d",
+                        "surface-container": "#f2ecf4",
+                        "on-background": "#1d1b20",
+                        "surface-dim": "#ded8e0",
+                        "on-surface-variant": "#494551",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#e7c365",
+                        "on-secondary-fixed-variant": "#4b4263",
+                        "primary-fixed-dim": "#cfbcff",
+                        "inverse-primary": "#cfbcff",
+                        "tertiary-fixed": "#ffdf93",
+                        "on-primary": "#ffffff",
+                        "primary": "#4f378a",
+                        "tertiary": "#765b00",
+                        "secondary-fixed-dim": "#cdc0e9",
+                        "secondary": "#63597c",
+                        "primary-fixed": "#e9ddff",
+                        "on-secondary-fixed": "#1f1635",
+                        "secondary-container": "#e1d4fd",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#e9ddff",
+                        "surface-container-high": "#ece6ee"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1200px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "section-gap": "64px",
+                        "margin-desktop": "40px",
+                        "unit": "4px",
+                        "stack-gap": "12px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "display": ["Plus Jakarta Sans"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 12px 40px rgba(79, 55, 138, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased min-h-screen flex flex-col md:flex-row">
+<!-- TopNavBar (Mobile) / BottomNavBar (Mobile) Suppressed based on rules: Settings page implies a task-focused departure, but let's assume it's a top-level dest since it's in the side nav. We will use BottomNavBar for mobile as per rules -->
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-2xl docked full-width bottom-0 rounded-t-3xl shadow-[0_-4px_20px_rgba(0,0,0,0.04)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-sm text-label-sm mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label-sm text-label-sm mt-1">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">event_note</span>
+<span class="font-label-sm text-label-sm mt-1">Planner</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="font-label-sm text-label-sm mt-1">Notes</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-2xl px-4 py-2 hover:text-primary transition-colors active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</nav>
+<!-- SideNavBar (Desktop Only) -->
+<nav class="hidden md:flex flex-col bg-surface-container-low dark:bg-surface-container-lowest h-screen w-64 fixed left-0 top-0 shadow-md p-4 gap-stack-gap z-40">
+<div class="flex items-center gap-3 mb-8 px-4 mt-4">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-on-primary font-display font-bold">S</div>
+<div>
+<h1 class="font-display text-headline-md font-bold text-primary dark:text-primary-fixed-dim leading-none">StudyFlow</h1>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Academic Excellence</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 flex-grow">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all translate-x-1 hover:translate-x-2" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all translate-x-1 hover:translate-x-2" href="#">
+<span class="material-symbols-outlined">book</span>
+<span class="font-label-md text-label-md">Subjects</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all translate-x-1 hover:translate-x-2" href="#">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+<span class="font-label-md text-label-md">Tasks</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all translate-x-1 hover:translate-x-2" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md text-label-md">Notes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all translate-x-1 hover:translate-x-2" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-md text-label-md">Study Planner</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all translate-x-1 hover:translate-x-2" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Pricing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-xl font-bold transition-all translate-x-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</div>
+<div class="mt-auto flex flex-col gap-4">
+<button class="w-full py-3 bg-gradient-to-r from-primary to-primary-fixed text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                Unlock Pro
+            </button>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 p-margin-mobile md:p-margin-desktop pb-24 md:pb-margin-desktop max-w-[1000px] mx-auto w-full">
+<!-- Header -->
+<header class="mb-section-gap flex justify-between items-center mt-4 md:mt-0">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-on-surface">Settings</h2>
+<button class="md:hidden w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Profile & Preferences -->
+<div class="lg:col-span-7 flex flex-col gap-stack-gap">
+<!-- Profile Section -->
+<section class="glass-card rounded-2xl p-6 md:p-8">
+<h3 class="font-headline-md text-on-surface mb-6">Profile</h3>
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+<div class="relative group cursor-pointer">
+<img alt="User Avatar" class="w-24 h-24 rounded-full object-cover border-4 border-surface shadow-sm" data-alt="A high-quality, professional headshot of a young student in a modern, well-lit environment. The lighting is soft and natural, creating a warm and approachable mood. The color palette features neutral tones with a subtle hint of soft indigo in the background, aligning with a sophisticated, clean aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5bmsP_NAiBxXS2CygYqXbZS97sUuYJ2Jc5_7g5s7lgF1J5EsC7CGgrk4aw6YF9sG441th2v_Yp_BC0oV_gYF9ijXnJb-Z-sRN9xX9FgsI7VhpS-o_Tvjs9X39CsrRyd9u6d0V_g0jAU70UZsG9XwzheVxYW7ZMeDjBwiBgsrJQefJdqCLibeU9id2FhnI22zpJz9P3LoJOGWUG29HQo5_yLg3UAxCHSCbt6rSE4ZdNq_r3RAog14JcAcozCzyFf0KBl3PRiFHccDF"/>
+<div class="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white">photo_camera</span>
+</div>
+</div>
+<div class="flex-1 w-full">
+<div class="grid gap-4">
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant block mb-1">Full Name</label>
+<div class="flex items-center gap-2">
+<input class="w-full bg-surface-container-lowest border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-lg py-2 px-3 font-body-md text-on-surface transition-colors" disabled="" type="text" value="Alex Student"/>
+</div>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant block mb-1">Email Address</label>
+<input class="w-full bg-surface-container-lowest border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-lg py-2 px-3 font-body-md text-on-surface transition-colors" disabled="" type="email" value="alex@university.edu"/>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-6 flex justify-end">
+<button class="px-6 py-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md rounded-lg transition-colors border border-outline-variant/30">
+                            Edit Profile
+                        </button>
+</div>
+</section>
+<!-- Preferences Section -->
+<section class="glass-card rounded-2xl p-6 md:p-8 mt-4">
+<h3 class="font-headline-md text-on-surface mb-6">Preferences</h3>
+<div class="flex flex-col gap-6">
+<!-- Theme Toggle -->
+<div class="flex items-center justify-between">
+<div>
+<h4 class="font-body-md text-on-surface font-medium">Appearance</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Customize your workspace theme</p>
+</div>
+<div class="flex bg-surface-container-lowest rounded-lg p-1 border border-outline-variant/30">
+<button class="px-4 py-1.5 rounded-md bg-primary-container text-on-primary-container font-label-sm text-label-sm shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">light_mode</span>
+                                    Light
+                                </button>
+<button class="px-4 py-1.5 rounded-md text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">dark_mode</span>
+                                    Dark
+                                </button>
+</div>
+</div>
+<hr class="border-surface-container-high"/>
+<!-- Reminders -->
+<div class="flex items-center justify-between">
+<div>
+<h4 class="font-body-md text-on-surface font-medium">Daily Reminders</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Receive notifications for upcoming deadlines</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<hr class="border-surface-container-high"/>
+<!-- Week Start -->
+<div class="flex items-center justify-between">
+<div>
+<h4 class="font-body-md text-on-surface font-medium">Week Starts On</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Adjust your calendar view</p>
+</div>
+<select class="bg-surface-container-lowest border-outline-variant/50 text-on-surface font-body-md text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5">
+<option>Monday</option>
+<option>Sunday</option>
+</select>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Plan & Danger Zone -->
+<div class="lg:col-span-5 flex flex-col gap-stack-gap">
+<!-- Plan Section -->
+<section class="glass-card rounded-2xl p-6 md:p-8 border-t-4 border-t-primary">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-headline-md text-on-surface">Current Plan</h3>
+<span class="inline-block mt-2 px-3 py-1 bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm rounded-full">Free Tier</span>
+</div>
+<span class="material-symbols-outlined text-primary text-3xl">verified</span>
+</div>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-label-sm text-label-sm text-on-surface">Subjects</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2 / 3</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2.5">
+<div class="bg-primary h-2.5 rounded-full" style="width: 66%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-label-sm text-label-sm text-on-surface">Tasks</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">12 / 20</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2.5">
+<div class="bg-primary h-2.5 rounded-full" style="width: 60%"></div>
+</div>
+</div>
+</div>
+<div class="mt-8 bg-surface-container-low rounded-xl p-4 border border-outline-variant/30 flex flex-col gap-3">
+<p class="font-body-md text-sm text-on-surface text-center">Unlock unlimited subjects, tasks, and advanced analytics.</p>
+<button class="w-full py-2.5 bg-gradient-to-r from-primary to-primary-fixed text-on-primary font-label-md text-label-md rounded-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">workspace_premium</span>
+                            Upgrade to Pro
+                        </button>
+</div>
+</section>
+<!-- Danger Zone -->
+<section class="bg-error-container/20 rounded-2xl p-6 md:p-8 border border-error-container/50 mt-4">
+<h3 class="font-headline-md text-error mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined">warning</span>
+                        Danger Zone
+                    </h3>
+<p class="font-body-md text-sm text-on-surface-variant mb-6">
+                        Once you delete your account, there is no going back. Please be certain.
+                    </p>
+<button class="px-6 py-2.5 bg-error text-on-error font-label-md text-label-md rounded-lg hover:bg-error/90 transition-colors w-full sm:w-auto">
+                        Delete Account
+                    </button>
+</section>
+</div>
+</div>
+</main>
+</body></html>

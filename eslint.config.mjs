@@ -12,6 +12,15 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local conversion/debug helpers and generated design exports.
+    "convert.js",
+    "fix.js",
+    "fix2.js",
+    "fix3.js",
+    "test-auth.js",
+    "UI/**",
+    "extracted_ui/**",
+    "scratch/**",
   ]),
 ]);
 

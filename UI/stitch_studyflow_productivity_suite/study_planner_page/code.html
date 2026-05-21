@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Study Planner - StudyFlow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#fdf7ff",
+                        "tertiary-container": "#c9a74d",
+                        "surface-container-highest": "#e6e0e9",
+                        "surface-container-low": "#f8f2fa",
+                        "on-tertiary-fixed-variant": "#594400",
+                        "inverse-on-surface": "#f5eff7",
+                        "on-surface": "#1d1b20",
+                        "on-primary-container": "#e0d2ff",
+                        "on-primary-fixed-variant": "#4f378a",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#322f35",
+                        "on-tertiary-fixed": "#241a00",
+                        "surface": "#fdf7ff",
+                        "background": "#fdf7ff",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#6750a4",
+                        "primary-container": "#6750a4",
+                        "surface-variant": "#e6e0e9",
+                        "on-tertiary-container": "#503d00",
+                        "outline": "#7a7582",
+                        "outline-variant": "#cbc4d2",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#645a7d",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed": "#22005d",
+                        "surface-container": "#f2ecf4",
+                        "on-background": "#1d1b20",
+                        "surface-dim": "#ded8e0",
+                        "on-surface-variant": "#494551",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#e7c365",
+                        "on-secondary-fixed-variant": "#4b4263",
+                        "primary-fixed-dim": "#cfbcff",
+                        "inverse-primary": "#cfbcff",
+                        "tertiary-fixed": "#ffdf93",
+                        "on-primary": "#ffffff",
+                        "primary": "#4f378a",
+                        "tertiary": "#765b00",
+                        "secondary-fixed-dim": "#cdc0e9",
+                        "secondary": "#63597c",
+                        "primary-fixed": "#e9ddff",
+                        "on-secondary-fixed": "#1f1635",
+                        "secondary-container": "#e1d4fd",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#e9ddff",
+                        "surface-container-high": "#ece6ee"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem"
+                    },
+                    "spacing": {
+                        "container-max": "1200px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "section-gap": "64px",
+                        "margin-desktop": "40px",
+                        "unit": "4px",
+                        "stack-gap": "12px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "display": ["Plus Jakarta Sans"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 12px 40px rgba(79, 55, 138, 0.04);
+        }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row min-h-screen antialiased bg-background text-on-background">
+<!-- SideNavBar (Desktop) -->
+<nav class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-low dark:bg-surface-container-lowest shadow-md p-4 gap-stack-gap z-40">
+<div class="mb-8 px-2 pt-4">
+<h1 class="font-display text-headline-md font-bold text-primary dark:text-primary-fixed-dim">StudyFlow</h1>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">Academic Excellence</p>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">book</span>
+<span>Subjects</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">assignment_turned_in</span>
+<span>Tasks</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">description</span>
+<span>Notes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-xl font-bold font-label-md text-label-md shadow-sm" href="#">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span>Study Planner</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">payments</span>
+<span>Pricing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all font-label-md text-label-md group mt-auto" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">settings</span>
+<span>Settings</span>
+</a>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant/30 flex flex-col gap-3">
+<button class="w-full py-2 bg-gradient-to-r from-primary to-primary-container text-white rounded-lg font-label-md text-label-md shadow-sm hover:shadow-md transition-shadow">Unlock Pro</button>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-all font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">account_circle</span>
+<span>Profile</span>
+</a>
+</div>
+</nav>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-2xl border-t border-white/10 rounded-t-3xl shadow-[0_-4px_20px_rgba(0,0,0,0.04)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1">assignment</span>
+<span class="font-label-sm text-label-sm">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-2xl px-4 py-2 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">event_note</span>
+<span class="font-label-sm text-label-sm font-bold">Planner</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1">edit_note</span>
+<span class="font-label-sm text-label-sm">Notes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 p-margin-mobile md:p-margin-desktop pb-24 md:pb-margin-desktop max-w-container-max mx-auto w-full">
+<!-- Header Section -->
+<header class="mb-section-gap flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-2">Study Planner</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Turn your topics into a simple study schedule.</p>
+</div>
+</header>
+<!-- Main Form Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Form Steps -->
+<div class="lg:col-span-8 space-y-6">
+<div class="glass-panel rounded-3xl p-6 md:p-8 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/20 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
+<form class="relative z-10 space-y-10">
+<!-- Step 1: Select Subject -->
+<section>
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-label-md text-label-md font-bold">1</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Select subject</h2>
+</div>
+<div class="pl-11">
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-low border border-outline-variant rounded-xl px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+<option disabled="" selected="" value="">Choose a subject...</option>
+<option value="biology">Biology 101</option>
+<option value="history">World History</option>
+<option value="math">Calculus II</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+</section>
+<hr class="border-outline-variant/30 ml-11"/>
+<!-- Step 2: Choose Exam Date -->
+<section>
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-label-md text-label-md font-bold">2</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Choose exam date</h2>
+</div>
+<div class="pl-11">
+<div class="relative max-w-sm">
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-xl px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" type="date"/>
+</div>
+</div>
+</section>
+<hr class="border-outline-variant/30 ml-11"/>
+<!-- Step 3: Add Topics -->
+<section>
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-label-md text-label-md font-bold">3</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Add topics or chapters</h2>
+</div>
+<div class="pl-11 space-y-3">
+<div class="flex gap-2">
+<input class="flex-1 bg-surface-container-low border border-outline-variant rounded-xl px-4 py-3 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="e.g., Chapter 1: Cell Structure" type="text"/>
+<button class="px-4 py-3 bg-surface-container-highest text-on-surface hover:bg-surface-variant rounded-xl transition-colors font-label-md text-label-md flex items-center justify-center" type="button">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<!-- Added Topics Visual -->
+<div class="flex flex-wrap gap-2 mt-3">
+<div class="bg-surface-container inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-outline-variant/50">
+<span class="font-body-md text-body-md text-sm text-on-surface">Chapter 1</span>
+<button class="text-on-surface-variant hover:text-error transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">close</span></button>
+</div>
+<div class="bg-surface-container inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-outline-variant/50">
+<span class="font-body-md text-body-md text-sm text-on-surface">Chapter 2</span>
+<button class="text-on-surface-variant hover:text-error transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">close</span></button>
+</div>
+</div>
+</div>
+</section>
+<hr class="border-outline-variant/30 ml-11"/>
+<!-- Step 4: Select Available Days -->
+<section>
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-label-md text-label-md font-bold">4</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Select available days</h2>
+</div>
+<div class="pl-11">
+<p class="font-body-md text-body-md text-sm text-on-surface-variant mb-3">Which days can you dedicate to studying?</p>
+<div class="flex flex-wrap gap-2">
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<span class="px-4 py-2 rounded-full border border-outline-variant bg-surface-container-low text-on-surface-variant font-label-md text-label-md peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all hover:bg-surface-variant">Mon</span>
+</label>
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<span class="px-4 py-2 rounded-full border border-outline-variant bg-surface-container-low text-on-surface-variant font-label-md text-label-md peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all hover:bg-surface-variant">Tue</span>
+</label>
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<span class="px-4 py-2 rounded-full border border-outline-variant bg-surface-container-low text-on-surface-variant font-label-md text-label-md peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all hover:bg-surface-variant">Wed</span>
+</label>
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<span class="px-4 py-2 rounded-full border border-outline-variant bg-surface-container-low text-on-surface-variant font-label-md text-label-md peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all hover:bg-surface-variant">Thu</span>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" type="checkbox"/>
+<span class="px-4 py-2 rounded-full border border-outline-variant bg-surface-container-low text-on-surface-variant font-label-md text-label-md peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all hover:bg-surface-variant">Fri</span>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" type="checkbox"/>
+<span class="px-4 py-2 rounded-full border border-outline-variant bg-surface-container-low text-on-surface-variant font-label-md text-label-md peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all hover:bg-surface-variant">Sat</span>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" type="checkbox"/>
+<span class="px-4 py-2 rounded-full border border-outline-variant bg-surface-container-low text-on-surface-variant font-label-md text-label-md peer-checked:bg-primary-container peer-checked:text-on-primary-container peer-checked:border-primary-container transition-all hover:bg-surface-variant">Sun</span>
+</label>
+</div>
+</div>
+</section>
+<!-- Submit Button -->
+<div class="pt-6 ml-11">
+<button class="w-full md:w-auto px-8 py-4 bg-gradient-to-r from-primary to-primary-container text-white rounded-xl font-label-md text-label-md shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined">auto_awesome</span>
+                                Generate Study Plan
+                            </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Right Column: Helpers & Tips -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Tip Card -->
+<div class="glass-panel rounded-2xl p-6 relative overflow-hidden bg-tertiary-container/10 border-tertiary-container/30">
+<div class="flex items-start gap-4">
+<div class="p-2 bg-tertiary-container/20 rounded-lg text-tertiary-container mt-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface mb-2">Pro Tip</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">"Add smaller topics for a more realistic plan."</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mt-2 opacity-80">Breaking down large chapters into distinct sub-topics helps our engine distribute the workload more evenly across your selected days.</p>
+</div>
+</div>
+</div>
+<!-- Decorative Elements to enhance the sophisticated focus aesthetic -->
+<div class="hidden lg:block bg-surface-container-low rounded-2xl p-6 border border-outline-variant/30 opacity-70">
+<div class="flex items-center gap-2 mb-4">
+<div class="w-3 h-3 rounded-full bg-primary-container"></div>
+<div class="h-2 w-24 bg-surface-variant rounded-full"></div>
+</div>
+<div class="space-y-3">
+<div class="h-2 w-full bg-surface-variant rounded-full"></div>
+<div class="h-2 w-3/4 bg-surface-variant rounded-full"></div>
+<div class="h-2 w-5/6 bg-surface-variant rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

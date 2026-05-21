@@ -1,402 +1,329 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { format, differenceInDays, parseISO } from 'date-fns'
+import {
+  Calendar,
+  Check,
+  X,
+  Clock3,
+  Filter,
+  Grid2X2,
+  Plus,
+  Search,
+  Trash2,
+} from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/components/providers/auth-provider'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { Badge } from '@/components/ui/badge'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { Plus, Pencil, Trash2, ClipboardCheck, Loader2 } from 'lucide-react'
-import { format, isPast, isToday, isFuture, parseISO } from 'date-fns'
-import type { Task, Subject } from '@/lib/types/database'
+import { cn } from '@/lib/utils'
+import type { Subject, Task } from '@/lib/types/database'
 import { toast } from 'sonner'
 
-const defaultForm = {
-  title: '',
-  description: '',
-  subject_id: '',
-  due_date: '',
-  priority: 'medium' as 'low' | 'medium' | 'high',
+type TaskWithSubject = Task & {
+  subject?: Subject | null
+  is_completed: boolean
+}
+
+type TaskFilter = 'all' | 'pending' | 'completed'
+
+const buckets = [
+  { key: 'do', title: 'Do Now', subtitle: 'Urgent + important', tone: 'from-rose-500 to-orange-400' },
+  { key: 'schedule', title: 'Schedule', subtitle: 'Important work', tone: 'from-amber-400 to-yellow-300' },
+  { key: 'review', title: 'Review', subtitle: 'Urgent, lighter lift', tone: 'from-sky-400 to-cyan-300' },
+  { key: 'later', title: 'Later', subtitle: 'Low urgency', tone: 'from-emerald-400 to-teal-300' },
+] as const
+
+function getBucket(task: TaskWithSubject) {
+  const days = differenceInDays(parseISO(task.due_date), new Date())
+  if (task.priority === 'high' && days <= 2) return 'do'
+  if (task.priority === 'high' || task.priority === 'medium') return 'schedule'
+  if (days <= 1) return 'review'
+  return 'later'
 }
 
 export default function TasksPage() {
   const { user } = useAuth()
-  const [tasks, setTasks] = useState<Task[]>([])
+  const [search, setSearch] = useState('')
+  const [filter, setFilter] = useState<TaskFilter>('all')
+  const [tasks, setTasks] = useState<TaskWithSubject[]>([])
   const [subjects, setSubjects] = useState<Subject[]>([])
   const [loading, setLoading] = useState(true)
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const [editingTask, setEditingTask] = useState<Task | null>(null)
-  const [form, setForm] = useState(defaultForm)
+  const [createOpen, setCreateOpen] = useState(false)
   const [saving, setSaving] = useState(false)
-  const supabase = createClient()
+  const [form, setForm] = useState({
+    title: '',
+    description: '',
+    due_date: new Date().toISOString().slice(0, 10),
+    priority: 'medium' as Task['priority'],
+    subject_id: '',
+  })
+  const supabase = useMemo(() => createClient(), [])
 
   useEffect(() => {
-    if (!user) return
-    fetchData()
-  }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
+    if (!user) {
+      const id = window.setTimeout(() => setLoading(false), 0)
+      return () => window.clearTimeout(id)
+    }
 
-  const fetchData = async () => {
-    const [tasksRes, subjectsRes] = await Promise.all([
-      supabase
-        .from('tasks')
-        .select('*')
-        .eq('user_id', user!.id)
-        .order('due_date', { ascending: true }),
-      supabase
-        .from('subjects')
-        .select('*')
-        .eq('user_id', user!.id),
-    ])
+    let ignore = false
+    async function fetchTasks() {
+      setLoading(true)
+      const [taskRes, subjectRes] = await Promise.all([
+        supabase
+          .from('tasks')
+          .select('*, subject:subjects(*)')
+          .eq('user_id', user!.id)
+          .order('due_date', { ascending: true }),
+        supabase.from('subjects').select('*').eq('user_id', user!.id).order('name', { ascending: true }),
+      ])
 
-    if (tasksRes.data) setTasks(tasksRes.data)
-    if (subjectsRes.data) setSubjects(subjectsRes.data)
-    setLoading(false)
-  }
+      if (ignore) return
+      setTasks(((taskRes.data ?? []) as (Task & { subject?: Subject | null })[]).map((task) => ({
+        ...task,
+        is_completed: task.status === 'completed',
+      })))
+      setSubjects((subjectRes.data ?? []) as Subject[])
+      setLoading(false)
+    }
 
-  const openCreateDialog = () => {
-    setEditingTask(null)
-    setForm(defaultForm)
-    setDialogOpen(true)
-  }
-
-  const openEditDialog = (task: Task) => {
-    setEditingTask(task)
-    setForm({
-      title: task.title,
-      description: task.description || '',
-      subject_id: task.subject_id || '',
-      due_date: task.due_date,
-      priority: task.priority,
+    fetchTasks().catch((error) => {
+      console.error('Failed to load tasks', error)
+      setLoading(false)
     })
-    setDialogOpen(true)
-  }
 
-  const handleSave = async () => {
-    if (!form.title.trim() || !form.due_date) {
-      toast.error('Title and due date are required')
-      return
+    return () => {
+      ignore = true
     }
-    setSaving(true)
+  }, [supabase, user])
 
-    const payload = {
-      title: form.title,
-      description: form.description || null,
-      subject_id: form.subject_id || null,
-      due_date: form.due_date,
-      priority: form.priority,
-    }
+  const filteredTasks = tasks.filter((task) => {
+    const matchesSearch = task.title.toLowerCase().includes(search.toLowerCase())
+    if (!matchesSearch) return false
+    if (filter === 'completed') return task.is_completed
+    if (filter === 'pending') return !task.is_completed
+    return true
+  })
 
-    if (editingTask) {
-      const { error } = await supabase
-        .from('tasks')
-        .update(payload)
-        .eq('id', editingTask.id)
-
-      if (error) {
-        toast.error('Failed to update task')
-        setSaving(false)
-        return
-      }
-      toast.success('Task updated')
-    } else {
-      const activeTasks = tasks.filter((t) => t.status === 'pending')
-      if (activeTasks.length >= 20) {
-        toast.error('Free plan is limited to 20 active tasks. Complete some tasks or upgrade!')
-        setSaving(false)
-        return
-      }
-
-      const { error } = await supabase
-        .from('tasks')
-        .insert({ ...payload, user_id: user!.id })
-
-      if (error) {
-        toast.error('Failed to create task')
-        setSaving(false)
-        return
-      }
-      toast.success('Task created')
-    }
-
-    setSaving(false)
-    setDialogOpen(false)
-    fetchData()
-  }
-
-  const toggleTask = async (task: Task) => {
-    const newStatus = task.status === 'completed' ? 'pending' : 'completed'
-    const { error } = await supabase
-      .from('tasks')
-      .update({ status: newStatus })
-      .eq('id', task.id)
-
-    if (error) {
-      toast.error('Failed to update task')
-      return
-    }
-
-    setTasks(tasks.map((t) => (t.id === task.id ? { ...t, status: newStatus } : t)))
-    if (newStatus === 'completed') toast.success('Task completed! 🎉')
-  }
-
-  const handleDelete = async (id: string) => {
-    if (!confirm('Delete this task?')) return
-    const { error } = await supabase.from('tasks').delete().eq('id', id)
-    if (error) {
-      toast.error('Failed to delete task')
-      return
-    }
-    toast.success('Task deleted')
-    setTasks(tasks.filter((t) => t.id !== id))
-  }
-
-  const getSubjectName = (subjectId: string | null) => {
-    if (!subjectId) return null
-    return subjects.find((s) => s.id === subjectId)
-  }
-
-  const todayTasks = tasks.filter((t) => t.status === 'pending' && isToday(parseISO(t.due_date)))
-  const overdueTasks = tasks.filter((t) => t.status === 'pending' && isPast(parseISO(t.due_date)) && !isToday(parseISO(t.due_date)))
-  const upcomingTasks = tasks.filter((t) => t.status === 'pending' && isFuture(parseISO(t.due_date)) && !isToday(parseISO(t.due_date)))
-  const completedTasks = tasks.filter((t) => t.status === 'completed')
-
-  const priorityColor = (p: string) => {
-    switch (p) {
-      case 'high': return 'text-red-500 bg-red-500/10 border-red-500/20'
-      case 'medium': return 'text-yellow-500 bg-yellow-500/10 border-yellow-500/20'
-      default: return 'text-green-500 bg-green-500/10 border-green-500/20'
-    }
-  }
-
-  const TaskItem = ({ task }: { task: Task }) => {
-    const subject = getSubjectName(task.subject_id)
-    return (
-      <div className="flex items-center gap-3 p-3 rounded-lg border border-border/50 bg-card hover:bg-muted/50 transition-colors group">
-        <Checkbox
-          checked={task.status === 'completed'}
-          onCheckedChange={() => toggleTask(task)}
-        />
-        <div className="flex-1 min-w-0">
-          <p className={`text-sm font-medium truncate ${task.status === 'completed' ? 'line-through text-muted-foreground' : ''}`}>
-            {task.title}
-          </p>
-          <div className="flex items-center gap-2 mt-1">
-            <span className="text-xs text-muted-foreground">
-              {format(parseISO(task.due_date), 'MMM d, yyyy')}
-            </span>
-            {subject && (
-              <Badge variant="outline" className="text-xs py-0 h-5" style={{ borderColor: subject.color, color: subject.color }}>
-                {subject.name}
-              </Badge>
-            )}
-          </div>
-        </div>
-        <Badge variant="secondary" className={`text-xs ${priorityColor(task.priority)}`}>
-          {task.priority}
-        </Badge>
-        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-          <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => openEditDialog(task)}>
-            <Pencil className="h-3 w-3" />
-          </Button>
-          <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive" onClick={() => handleDelete(task.id)}>
-            <Trash2 className="h-3 w-3" />
-          </Button>
-        </div>
-      </div>
-    )
-  }
-
-  const EmptyState = ({ message }: { message: string }) => (
-    <div className="text-center py-12">
-      <ClipboardCheck className="h-12 w-12 text-muted-foreground/30 mx-auto mb-3" />
-      <p className="text-sm text-muted-foreground">{message}</p>
-    </div>
+  const openTasks = tasks.filter((task) => !task.is_completed)
+  const matrixTasks = openTasks.reduce<Record<string, TaskWithSubject[]>>(
+    (acc, task) => {
+      acc[getBucket(task)].push(task)
+      return acc
+    },
+    { do: [], schedule: [], review: [], later: [] }
   )
 
-  if (loading) {
-    return (
-      <div className="space-y-6">
-        <div className="h-8 w-48 bg-muted animate-pulse rounded" />
-        <div className="space-y-3">
-          {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-16 bg-muted animate-pulse rounded-lg" />
-          ))}
-        </div>
-      </div>
-    )
+  const toggleTask = async (task: TaskWithSubject) => {
+    const newStatus = task.is_completed ? 'pending' : 'completed'
+    const { error } = await supabase.from('tasks').update({ status: newStatus }).eq('id', task.id)
+    if (!error) {
+      setTasks((current) => current.map((item) => item.id === task.id ? { ...item, is_completed: !item.is_completed, status: newStatus } : item))
+    }
+  }
+
+  const deleteTask = async (id: string) => {
+    if (!confirm('Delete this task?')) return
+    const { error } = await supabase.from('tasks').delete().eq('id', id)
+    if (!error) setTasks((current) => current.filter((task) => task.id !== id))
+  }
+
+  const createTask = async () => {
+    if (!user) return toast.error('Sign in to create tasks')
+    if (!form.title.trim()) return toast.error('Task title is required')
+    setSaving(true)
+    const { data, error } = await supabase
+      .from('tasks')
+      .insert({
+        user_id: user.id,
+        subject_id: form.subject_id || null,
+        title: form.title.trim(),
+        description: form.description.trim() || null,
+        due_date: form.due_date,
+        priority: form.priority,
+        status: 'pending',
+      })
+      .select('*, subject:subjects(*)')
+      .single()
+
+    if (error) {
+      toast.error(error.message)
+    } else {
+      setTasks((current) => [...current, { ...(data as Task & { subject?: Subject | null }), is_completed: false }].sort((a, b) => a.due_date.localeCompare(b.due_date)))
+      setCreateOpen(false)
+      setForm({ title: '', description: '', due_date: new Date().toISOString().slice(0, 10), priority: 'medium', subject_id: '' })
+      toast.success('Task created')
+    }
+    setSaving(false)
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Tasks & Deadlines</h1>
-          <p className="text-muted-foreground">Track your assignments and deadlines</p>
+    <div className="space-y-6 text-slate-950 dark:text-white">
+      <section className="relative overflow-hidden rounded-[32px] border border-white/12 bg-[#081411] p-5 text-white shadow-[0_24px_80px_rgba(0,0,0,0.28)] sm:p-7">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_0%,rgba(52,211,153,0.24),transparent_30%),radial-gradient(circle_at_86%_12%,rgba(14,165,233,0.18),transparent_28%)]" />
+        <div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/10 px-3 py-1.5 text-xs font-bold text-white/70">
+              <Grid2X2 className="h-3.5 w-3.5 text-emerald-200" />
+              Eisenhower priority board
+            </div>
+            <h1 className="text-3xl font-black tracking-tight sm:text-4xl">Tasks and deadlines</h1>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-white/62">
+              Sort assignments by urgency, deadline, and priority without losing the clean list view.
+            </p>
+          </div>
+          <button onClick={() => setCreateOpen(true)} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-white px-5 text-sm font-black text-emerald-950 shadow-xl transition hover:-translate-y-0.5">
+            <Plus className="h-4 w-4" />
+            New task
+          </button>
         </div>
-        <Button onClick={openCreateDialog}>
-              <Plus className="mr-2 h-4 w-4" />
-              Add Task
-            </Button>
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{editingTask ? 'Edit Task' : 'Create Task'}</DialogTitle>
-              <DialogDescription>
-                {editingTask ? 'Update your task details' : 'Add a new task or assignment'}
-              </DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <Label htmlFor="taskTitle">Title</Label>
-                <Input
-                  id="taskTitle"
-                  placeholder="e.g., Complete Chapter 5 exercises"
-                  value={form.title}
-                  onChange={(e) => setForm({ ...form, title: e.target.value })}
-                />
+      </section>
+
+      <section className="grid gap-4 md:grid-cols-4">
+        {buckets.map((bucket) => (
+          <div key={bucket.key} className="rounded-[28px] border border-white/70 bg-white/82 p-4 shadow-xl shadow-emerald-950/5 backdrop-blur-2xl dark:border-white/10 dark:bg-white/8">
+            <div className={cn('mb-4 h-2 rounded-full bg-gradient-to-r', bucket.tone)} />
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="font-black">{bucket.title}</p>
+                <p className="text-xs font-semibold text-slate-500 dark:text-white/45">{bucket.subtitle}</p>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="taskDesc">Description (optional)</Label>
-                <Textarea
-                  id="taskDesc"
-                  placeholder="Add details..."
-                  value={form.description}
-                  onChange={(e) => setForm({ ...form, description: e.target.value })}
-                  rows={2}
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="taskDate">Due Date</Label>
-                  <Input
-                    id="taskDate"
-                    type="date"
-                    value={form.due_date}
-                    onChange={(e) => setForm({ ...form, due_date: e.target.value })}
-                  />
+              <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-black dark:bg-white/10">
+                {matrixTasks[bucket.key].length}
+              </span>
+            </div>
+            <div className="mt-4 space-y-2">
+              {matrixTasks[bucket.key].slice(0, 2).map((task) => (
+                <div key={task.id} className="rounded-2xl bg-slate-50 p-3 text-sm dark:bg-black/18">
+                  <p className="truncate font-bold">{task.title}</p>
+                  <p className="mt-1 text-xs text-slate-500 dark:text-white/45">{format(parseISO(task.due_date), 'MMM d')} - {task.priority}</p>
                 </div>
-                <div className="space-y-2">
-                  <Label>Priority</Label>
-                  <Select value={form.priority} onValueChange={(v: string | null) => { if (v) setForm({ ...form, priority: v as Task['priority'] }) }}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="low">Low</SelectItem>
-                      <SelectItem value="medium">Medium</SelectItem>
-                      <SelectItem value="high">High</SelectItem>
-                    </SelectContent>
-                  </Select>
+              ))}
+              {matrixTasks[bucket.key].length === 0 && (
+                <p className="rounded-2xl border border-dashed border-slate-200 p-3 text-sm font-semibold text-slate-400 dark:border-white/10">Clear</p>
+              )}
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <section className="rounded-[32px] border border-white/70 bg-white/82 p-4 shadow-xl shadow-emerald-950/5 backdrop-blur-2xl dark:border-white/10 dark:bg-white/8 sm:p-5">
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div className="relative w-full lg:max-w-sm">
+            <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+            <input
+              className="h-12 w-full rounded-2xl border border-slate-200 bg-white pl-11 pr-4 text-sm font-semibold outline-none ring-emerald-300/20 transition focus:ring-4 dark:border-white/10 dark:bg-black/18"
+              placeholder="Search tasks..."
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+          </div>
+          <div className="flex rounded-2xl bg-slate-100 p-1 dark:bg-black/18">
+            {(['all', 'pending', 'completed'] as const).map((item) => (
+              <button
+                key={item}
+                onClick={() => setFilter(item)}
+                className={cn(
+                  'min-h-10 flex-1 rounded-xl px-4 text-sm font-black capitalize transition sm:flex-none',
+                  filter === item ? 'bg-white text-emerald-700 shadow-sm dark:bg-white dark:text-emerald-950' : 'text-slate-500 dark:text-white/45'
+                )}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-5 space-y-3">
+          {loading ? (
+            <div className="rounded-3xl border border-dashed border-slate-200 p-10 text-center text-sm font-semibold text-slate-400 dark:border-white/10">Loading tasks...</div>
+          ) : filteredTasks.length === 0 ? (
+            <div className="rounded-3xl border border-dashed border-slate-200 p-10 text-center dark:border-white/10">
+              <Filter className="mx-auto mb-3 h-7 w-7 text-slate-300" />
+              <p className="font-bold text-slate-500 dark:text-white/45">No tasks found.</p>
+            </div>
+          ) : (
+            filteredTasks.map((task) => (
+              <div
+                key={task.id}
+                className={cn(
+                  'group flex items-center gap-4 rounded-3xl border p-4 transition hover:-translate-y-0.5 hover:shadow-lg',
+                  task.is_completed
+                    ? 'border-transparent bg-slate-50 opacity-70 dark:bg-white/5'
+                    : 'border-slate-100 bg-white dark:border-white/10 dark:bg-black/18'
+                )}
+              >
+                <button
+                  onClick={() => toggleTask(task)}
+                  className={cn(
+                    'grid h-7 w-7 shrink-0 place-items-center rounded-xl border-2 transition',
+                    task.is_completed ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-slate-200 bg-white dark:border-white/20 dark:bg-white/5'
+                  )}
+                >
+                  {task.is_completed && <Check className="h-4 w-4" />}
+                </button>
+                <div className="min-w-0 flex-1">
+                  <p className={cn('truncate text-sm font-black sm:text-base', task.is_completed && 'line-through text-slate-400')}>
+                    {task.title}
+                  </p>
+                  <div className="mt-2 flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500 dark:text-white/45">
+                    {task.subject && (
+                      <span className="rounded-full px-2.5 py-1" style={{ backgroundColor: `${task.subject.color}1f`, color: task.subject.color }}>
+                        {task.subject.name}
+                      </span>
+                    )}
+                    <span className="inline-flex items-center gap-1">
+                      <Calendar className="h-3.5 w-3.5" />
+                      {format(parseISO(task.due_date), 'MMM d, yyyy')}
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      <Clock3 className="h-3.5 w-3.5" />
+                      {task.priority}
+                    </span>
+                  </div>
                 </div>
+                <button onClick={() => deleteTask(task.id)} className="grid h-10 w-10 place-items-center rounded-2xl text-slate-400 opacity-100 transition hover:bg-red-50 hover:text-red-500 sm:opacity-0 sm:group-hover:opacity-100">
+                  <Trash2 className="h-4 w-4" />
+                </button>
               </div>
-              <div className="space-y-2">
-                <Label>Subject (optional)</Label>
-                <Select value={form.subject_id || 'none'} onValueChange={(v: string | null) => setForm({ ...form, subject_id: !v || v === 'none' ? '' : v })}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a subject" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="none">No subject</SelectItem>
-                    {subjects.map((s) => (
-                      <SelectItem key={s.id} value={s.id}>
-                        {s.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+            ))
+          )}
+        </div>
+      </section>
+
+      {createOpen && (
+        <div className="fixed inset-0 z-[80] grid place-items-center bg-black/60 p-4 text-white backdrop-blur-xl">
+          <div className="w-full max-w-lg rounded-[32px] border border-white/10 bg-[#081411] p-6 shadow-2xl">
+            <div className="mb-5 flex items-center justify-between">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-white/40">Task</p>
+                <h2 className="text-xl font-black">Create task</h2>
               </div>
+              <button onClick={() => setCreateOpen(false)} className="grid h-10 w-10 place-items-center rounded-2xl bg-white/10">
+                <X className="h-5 w-5" />
+              </button>
             </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button>
-              <Button onClick={handleSave} disabled={saving}>
-                {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {editingTask ? 'Update' : 'Create'}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </div>
-
-      <Tabs defaultValue="today" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="today" className="text-xs sm:text-sm">
-            Today ({todayTasks.length})
-          </TabsTrigger>
-          <TabsTrigger value="upcoming" className="text-xs sm:text-sm">
-            Upcoming ({upcomingTasks.length})
-          </TabsTrigger>
-          <TabsTrigger value="overdue" className="text-xs sm:text-sm">
-            Overdue ({overdueTasks.length})
-          </TabsTrigger>
-          <TabsTrigger value="completed" className="text-xs sm:text-sm">
-            Done ({completedTasks.length})
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="today" className="mt-4">
-          {todayTasks.length === 0 ? (
-            <EmptyState message="No tasks due today. Enjoy your day! 🌟" />
-          ) : (
-            <div className="space-y-2">
-              {todayTasks.map((task) => <TaskItem key={task.id} task={task} />)}
+            <div className="grid gap-4">
+              <input value={form.title} onChange={(event) => setForm({ ...form, title: event.target.value })} placeholder="Task title" className="h-12 rounded-2xl border border-white/10 bg-white/10 px-4 font-semibold outline-none placeholder:text-white/35" />
+              <textarea value={form.description} onChange={(event) => setForm({ ...form, description: event.target.value })} placeholder="Description" className="min-h-24 rounded-2xl border border-white/10 bg-white/10 p-4 font-semibold outline-none placeholder:text-white/35" />
+              <div className="grid gap-3 sm:grid-cols-3">
+                <input type="date" value={form.due_date} onChange={(event) => setForm({ ...form, due_date: event.target.value })} className="h-12 rounded-2xl border border-white/10 bg-white/10 px-4 font-semibold outline-none" />
+                <select value={form.priority} onChange={(event) => setForm({ ...form, priority: event.target.value as Task['priority'] })} className="h-12 rounded-2xl border border-white/10 bg-white/10 px-4 font-semibold outline-none">
+                  <option className="text-slate-950" value="low">Low</option>
+                  <option className="text-slate-950" value="medium">Medium</option>
+                  <option className="text-slate-950" value="high">High</option>
+                </select>
+                <select value={form.subject_id} onChange={(event) => setForm({ ...form, subject_id: event.target.value })} className="h-12 rounded-2xl border border-white/10 bg-white/10 px-4 font-semibold outline-none">
+                  <option className="text-slate-950" value="">No subject</option>
+                  {subjects.map((subject) => <option className="text-slate-950" key={subject.id} value={subject.id}>{subject.name}</option>)}
+                </select>
+              </div>
+              <button onClick={createTask} disabled={saving} className="mt-2 min-h-12 rounded-2xl bg-white text-sm font-black text-emerald-950 disabled:opacity-50">
+                {saving ? 'Creating...' : 'Create task'}
+              </button>
             </div>
-          )}
-        </TabsContent>
-
-        <TabsContent value="upcoming" className="mt-4">
-          {upcomingTasks.length === 0 ? (
-            <EmptyState message="No upcoming tasks. You're all caught up! 🎉" />
-          ) : (
-            <div className="space-y-2">
-              {upcomingTasks.map((task) => <TaskItem key={task.id} task={task} />)}
-            </div>
-          )}
-        </TabsContent>
-
-        <TabsContent value="overdue" className="mt-4">
-          {overdueTasks.length === 0 ? (
-            <EmptyState message="No overdue tasks. Great job staying on track! ✅" />
-          ) : (
-            <div className="space-y-2">
-              {overdueTasks.map((task) => <TaskItem key={task.id} task={task} />)}
-            </div>
-          )}
-        </TabsContent>
-
-        <TabsContent value="completed" className="mt-4">
-          {completedTasks.length === 0 ? (
-            <EmptyState message="No completed tasks yet. Get started!" />
-          ) : (
-            <div className="space-y-2">
-              {completedTasks.map((task) => <TaskItem key={task.id} task={task} />)}
-            </div>
-          )}
-        </TabsContent>
-      </Tabs>
-
-      <p className="text-xs text-muted-foreground text-center">
-        {tasks.filter((t) => t.status === 'pending').length} / 20 active tasks (Free plan)
-      </p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

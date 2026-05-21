@@ -1,575 +1,306 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { differenceInDays, format, isToday, parseISO } from 'date-fns'
+import {
+  BookOpen,
+  CalendarDays,
+  Check,
+  Clock,
+  Edit2,
+  FileText,
+  ListOrdered,
+  Plus,
+  Save,
+  Share2,
+  Target,
+  Timer,
+  X,
+} from 'lucide-react'
+import { toast } from 'sonner'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/components/providers/auth-provider'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { Badge } from '@/components/ui/badge'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Separator } from '@/components/ui/separator'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import {
-  Plus,
-  CalendarDays,
-  Loader2,
-  Trash2,
-  Share2,
-  Copy,
-  Eye,
-} from 'lucide-react'
-import { format, parseISO, addDays, differenceInDays, isBefore } from 'date-fns'
-import type { Subject, StudyPlan, StudyPlanItem } from '@/lib/types/database'
-import { toast } from 'sonner'
+import { cn } from '@/lib/utils'
+import type { StudyPlan, StudyPlanItem, Subject } from '@/lib/types/database'
 
-function generateSlug() {
-  return Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 6)
+type PlanWithDetails = StudyPlan & {
+  subject?: Subject | null
+  items?: StudyPlanItem[]
 }
 
-function distributeTopic(topics: string[], startDate: Date, endDate: Date, studyDays: number[]): { topic: string; date: Date }[] {
-  const schedule: { topic: string; date: Date }[] = []
-  const availableDates: Date[] = []
-
-  // Collect all available study dates between start and end
-  let current = new Date(startDate)
-  while (isBefore(current, endDate) || current.getTime() === endDate.getTime()) {
-    const dayOfWeek = current.getDay()
-    if (studyDays.includes(dayOfWeek)) {
-      availableDates.push(new Date(current))
-    }
-    current = addDays(current, 1)
-  }
-
-  if (availableDates.length === 0) return []
-
-  // Distribute topics across available dates
-  const topicsPerDay = Math.ceil(topics.length / availableDates.length)
-  let topicIndex = 0
-
-  for (const date of availableDates) {
-    for (let i = 0; i < topicsPerDay && topicIndex < topics.length; i++) {
-      schedule.push({ topic: topics[topicIndex], date })
-      topicIndex++
-    }
-  }
-
-  return schedule
+function defaultExamDate() {
+  const date = new Date()
+  date.setDate(date.getDate() + 7)
+  return date.toISOString().slice(0, 10)
 }
-
-const DAYS_OF_WEEK = [
-  { value: 0, label: 'Sun' },
-  { value: 1, label: 'Mon' },
-  { value: 2, label: 'Tue' },
-  { value: 3, label: 'Wed' },
-  { value: 4, label: 'Thu' },
-  { value: 5, label: 'Fri' },
-  { value: 6, label: 'Sat' },
-]
 
 export default function PlannerPage() {
   const { user } = useAuth()
-  const [plans, setPlans] = useState<StudyPlan[]>([])
-  const [planItems, setPlanItems] = useState<Record<string, StudyPlanItem[]>>({})
+  const [plans, setPlans] = useState<PlanWithDetails[]>([])
   const [subjects, setSubjects] = useState<Subject[]>([])
   const [loading, setLoading] = useState(true)
   const [createOpen, setCreateOpen] = useState(false)
-  const [viewPlanId, setViewPlanId] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
-
-  // Form state
-  const [form, setForm] = useState({
+  const [form, setForm] = useState(() => ({
     title: '',
     subject_id: '',
-    exam_date: '',
-    topics: '',
-    study_days: [1, 2, 3, 4, 5] as number[],
-  })
-
-  // Preview state
-  const [preview, setPreview] = useState<{ topic: string; date: Date }[] | null>(null)
-
-  const supabase = createClient()
+    exam_date: defaultExamDate(),
+    topics: 'Review syllabus\nPractice problems\nMock test',
+  }))
+  const supabase = useMemo(() => createClient(), [])
 
   useEffect(() => {
-    if (!user) return
-    fetchData()
-  }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  const fetchData = async () => {
-    const [plansRes, subjectsRes] = await Promise.all([
-      supabase
-        .from('study_plans')
-        .select('*')
-        .eq('user_id', user!.id)
-        .order('created_at', { ascending: false }),
-      supabase
-        .from('subjects')
-        .select('*')
-        .eq('user_id', user!.id),
-    ])
-
-    if (plansRes.data) {
-      setPlans(plansRes.data)
-      // Fetch items for each plan
-      for (const plan of plansRes.data) {
-        const { data: items } = await supabase
-          .from('study_plan_items')
-          .select('*')
-          .eq('plan_id', plan.id)
-          .order('scheduled_date', { ascending: true })
-
-        if (items) {
-          setPlanItems((prev) => ({ ...prev, [plan.id]: items }))
-        }
-      }
-    }
-    if (subjectsRes.data) setSubjects(subjectsRes.data)
-    setLoading(false)
-  }
-
-  const handleGenerate = () => {
-    const topics = form.topics.split('\n').map((t) => t.trim()).filter(Boolean)
-    if (!form.title || !form.exam_date || topics.length === 0) {
-      toast.error('Please fill in title, exam date, and at least one topic')
-      return
-    }
-    if (form.study_days.length === 0) {
-      toast.error('Please select at least one study day')
-      return
+    if (!user) {
+      const id = window.setTimeout(() => setLoading(false), 0)
+      return () => window.clearTimeout(id)
     }
 
-    const startDate = new Date()
-    const endDate = parseISO(form.exam_date)
+    let ignore = false
+    async function fetchPlans() {
+      setLoading(true)
+      const [planRes, subjectRes] = await Promise.all([
+        supabase
+          .from('study_plans')
+          .select('*, subject:subjects(*), items:study_plan_items(*)')
+          .eq('user_id', user!.id)
+          .order('exam_date', { ascending: true }),
+        supabase.from('subjects').select('*').eq('user_id', user!.id).order('name', { ascending: true }),
+      ])
 
-    if (isBefore(endDate, startDate)) {
-      toast.error('Exam date must be in the future')
-      return
+      if (ignore) return
+      setPlans((planRes.data ?? []) as PlanWithDetails[])
+      setSubjects((subjectRes.data ?? []) as Subject[])
+      setLoading(false)
     }
 
-    const schedule = distributeTopic(topics, startDate, endDate, form.study_days)
-    if (schedule.length === 0) {
-      toast.error('No available study days before the exam. Try adding more days.')
-      return
+    fetchPlans().catch((error) => {
+      console.error('Failed to load plans', error)
+      setLoading(false)
+    })
+
+    return () => {
+      ignore = true
     }
+  }, [supabase, user])
 
-    setPreview(schedule)
-    toast.success(`Generated schedule with ${schedule.length} study sessions!`)
-  }
+  const activePlan = plans[0] ?? null
+  const items = activePlan?.items ?? []
+  const completedItems = items.filter((item) => item.is_completed).length
+  const progress = items.length > 0 ? Math.round((completedItems / items.length) * 100) : 0
+  const daysLeft = activePlan ? Math.max(0, differenceInDays(parseISO(activePlan.exam_date), new Date())) : 0
 
-  const handleSave = async () => {
-    if (!preview) return
+  const createPlan = async () => {
+    if (!user) return toast.error('Sign in to create plans')
+    if (!form.title.trim()) return toast.error('Plan title is required')
+    const topics = form.topics.split('\n').map((topic) => topic.trim()).filter(Boolean)
+    if (topics.length === 0) return toast.error('Add at least one topic')
+
     setSaving(true)
-
-    // Check plan limits
-    if (plans.length >= 5) {
-      toast.error('Free plan is limited to 5 study plans. Upgrade for unlimited!')
-      setSaving(false)
-      return
-    }
-
-    const slug = generateSlug()
-    const { data: plan, error: planError } = await supabase
+    const { data: plan, error } = await supabase
       .from('study_plans')
       .insert({
-        user_id: user!.id,
-        title: form.title,
+        user_id: user.id,
         subject_id: form.subject_id || null,
+        title: form.title.trim(),
         exam_date: form.exam_date,
-        share_slug: slug,
       })
-      .select()
+      .select('*, subject:subjects(*)')
       .single()
 
-    if (planError || !plan) {
-      toast.error('Failed to create study plan')
+    if (error || !plan) {
+      toast.error(error?.message || 'Failed to create plan')
       setSaving(false)
       return
     }
 
-    const items = preview.map((item) => ({
-      plan_id: plan.id,
-      topic: item.topic,
-      scheduled_date: format(item.date, 'yyyy-MM-dd'),
-    }))
+    const start = new Date()
+    const end = new Date(form.exam_date)
+    const totalDays = Math.max(1, differenceInDays(end, start))
+    const rows = topics.map((topic, index) => {
+      const date = new Date()
+      date.setDate(date.getDate() + Math.min(totalDays, index + 1))
+      return {
+        plan_id: plan.id,
+        topic,
+        scheduled_date: date.toISOString().slice(0, 10),
+      }
+    })
 
-    const { error: itemsError } = await supabase
-      .from('study_plan_items')
-      .insert(items)
-
-    if (itemsError) {
-      toast.error('Failed to save plan items')
-      setSaving(false)
-      return
+    const { data: items, error: itemError } = await supabase.from('study_plan_items').insert(rows).select('*')
+    if (itemError) {
+      toast.error(itemError.message)
+    } else {
+      setPlans((current) => [{ ...(plan as PlanWithDetails), items: (items ?? []) as StudyPlanItem[] }, ...current].sort((a, b) => a.exam_date.localeCompare(b.exam_date)))
+      setCreateOpen(false)
+      setForm({ title: '', subject_id: '', exam_date: defaultExamDate(), topics: 'Review syllabus\nPractice problems\nMock test' })
+      toast.success('Study plan created')
     }
-
-    toast.success('Study plan saved!')
     setSaving(false)
-    setCreateOpen(false)
-    setPreview(null)
-    setForm({ title: '', subject_id: '', exam_date: '', topics: '', study_days: [1, 2, 3, 4, 5] })
-    fetchData()
-  }
-
-  const togglePublic = async (plan: StudyPlan) => {
-    const { error } = await supabase
-      .from('study_plans')
-      .update({ is_public: !plan.is_public })
-      .eq('id', plan.id)
-
-    if (error) {
-      toast.error('Failed to update plan')
-      return
-    }
-
-    setPlans(plans.map((p) => (p.id === plan.id ? { ...p, is_public: !p.is_public } : p)))
-    toast.success(plan.is_public ? 'Plan is now private' : 'Plan is now public!')
-  }
-
-  const copyShareLink = (slug: string) => {
-    const url = `${window.location.origin}/plan/${slug}`
-    navigator.clipboard.writeText(url)
-    toast.success('Share link copied!')
-  }
-
-  const toggleItem = async (item: StudyPlanItem) => {
-    const { error } = await supabase
-      .from('study_plan_items')
-      .update({ is_completed: !item.is_completed })
-      .eq('id', item.id)
-
-    if (error) {
-      toast.error('Failed to update')
-      return
-    }
-
-    setPlanItems((prev) => ({
-      ...prev,
-      [item.plan_id]: prev[item.plan_id].map((i) =>
-        i.id === item.id ? { ...i, is_completed: !i.is_completed } : i
-      ),
-    }))
-  }
-
-  const deletePlan = async (id: string) => {
-    if (!confirm('Delete this study plan?')) return
-    const { error } = await supabase.from('study_plans').delete().eq('id', id)
-    if (error) {
-      toast.error('Failed to delete plan')
-      return
-    }
-    toast.success('Plan deleted')
-    setPlans(plans.filter((p) => p.id !== id))
-    if (viewPlanId === id) setViewPlanId(null)
-  }
-
-  const toggleStudyDay = (day: number) => {
-    setForm((prev) => ({
-      ...prev,
-      study_days: prev.study_days.includes(day)
-        ? prev.study_days.filter((d) => d !== day)
-        : [...prev.study_days, day].sort(),
-    }))
-  }
-
-  if (loading) {
-    return (
-      <div className="space-y-6">
-        <div className="h-8 w-48 bg-muted animate-pulse rounded" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {[1, 2].map((i) => (
-            <div key={i} className="h-48 bg-muted animate-pulse rounded-lg" />
-          ))}
-        </div>
-      </div>
-    )
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Study Planner</h1>
-          <p className="text-muted-foreground">Create study schedules for your exams</p>
+    <div className="space-y-6 text-slate-950 dark:text-white">
+      <section className="relative overflow-hidden rounded-[32px] border border-white/12 bg-[#081411] p-5 text-white shadow-[0_24px_80px_rgba(0,0,0,0.28)] sm:p-7">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(245,158,11,0.22),transparent_30%),radial-gradient(circle_at_86%_8%,rgba(52,211,153,0.18),transparent_30%)]" />
+        <div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/10 px-3 py-1.5 text-xs font-bold text-white/70">
+              <Target className="h-3.5 w-3.5 text-amber-200" />
+              Exam-ready schedule
+            </div>
+            <h1 className="text-3xl font-black tracking-tight sm:text-4xl">Study planner</h1>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-white/62">
+              Turn exam dates into a realistic review path with progress, pacing, and daily study blocks.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button onClick={() => setCreateOpen(true)} className="inline-flex min-h-11 items-center gap-2 rounded-2xl border border-white/12 bg-white/10 px-4 text-sm font-black text-white transition hover:bg-white/16">
+              <Edit2 className="h-4 w-4" />
+              New
+            </button>
+            <button className="inline-flex min-h-11 items-center gap-2 rounded-2xl border border-white/12 bg-white/10 px-4 text-sm font-black text-white transition hover:bg-white/16">
+              <Share2 className="h-4 w-4" />
+              Share
+            </button>
+            <button className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-white px-4 text-sm font-black text-emerald-950">
+              <Save className="h-4 w-4" />
+              Save
+            </button>
+          </div>
         </div>
-        <Button onClick={() => setCreateOpen(true)}>
-              <Plus className="mr-2 h-4 w-4" />
-              New Plan
-            </Button>
-        <Dialog open={createOpen} onOpenChange={(o) => { setCreateOpen(o); if (!o) setPreview(null) }}>
-          <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>Create Study Plan</DialogTitle>
-              <DialogDescription>
-                Enter your topics and study days, and we&apos;ll distribute them evenly before your exam.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4 py-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Plan Title</Label>
-                  <Input
-                    placeholder="e.g., Math Final Prep"
-                    value={form.title}
-                    onChange={(e) => setForm({ ...form, title: e.target.value })}
-                  />
+      </section>
+
+      {loading ? (
+        <div className="rounded-[32px] border border-white/70 bg-white/82 p-10 text-center text-sm font-semibold text-slate-400 shadow-xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/8">Loading planner...</div>
+      ) : !activePlan ? (
+        <div className="rounded-[32px] border border-dashed border-white/70 bg-white/82 p-12 text-center shadow-xl backdrop-blur-2xl dark:border-white/10 dark:bg-white/8">
+          <CalendarDays className="mx-auto mb-4 h-10 w-10 text-slate-300" />
+          <h2 className="text-2xl font-black">No study plan yet</h2>
+          <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500 dark:text-white/45">Create a plan to see exam countdowns, topic progress, and a daily schedule here.</p>
+          <button onClick={() => setCreateOpen(true)} className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-2xl bg-slate-950 px-5 text-sm font-black text-white dark:bg-white dark:text-slate-950">
+            <Plus className="h-4 w-4" />
+            Create plan
+          </button>
+        </div>
+      ) : (
+        <>
+          <section className="grid gap-5 lg:grid-cols-[1fr_360px]">
+            <div className="rounded-[32px] border border-white/70 bg-white/82 p-5 shadow-xl shadow-emerald-950/5 backdrop-blur-2xl dark:border-white/10 dark:bg-white/8 sm:p-6">
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">Active plan</p>
+                  <h2 className="mt-2 text-3xl font-black tracking-tight">{activePlan.title}</h2>
+                  <p className="mt-2 text-sm font-semibold text-slate-500 dark:text-white/45">{activePlan.subject?.name || 'General study'} - {format(parseISO(activePlan.exam_date), 'MMM d, yyyy')}</p>
                 </div>
-                <div className="space-y-2">
-                  <Label>Subject (optional)</Label>
-                  <Select value={form.subject_id || 'none'} onValueChange={(v: string | null) => setForm({ ...form, subject_id: !v || v === 'none' ? '' : v })}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a subject" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="none">No subject</SelectItem>
-                      {subjects.map((s) => (
-                        <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                <div className="rounded-3xl bg-emerald-50 p-5 text-emerald-800 dark:bg-emerald-400/10 dark:text-emerald-200">
+                  <p className="text-4xl font-black">{daysLeft}</p>
+                  <p className="text-xs font-black uppercase tracking-wide">days left</p>
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label>Exam Date</Label>
-                <Input
-                  type="date"
-                  value={form.exam_date}
-                  onChange={(e) => setForm({ ...form, exam_date: e.target.value })}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label>Available Study Days</Label>
-                <div className="flex flex-wrap gap-2">
-                  {DAYS_OF_WEEK.map((day) => (
-                    <Button
-                      key={day.value}
-                      variant={form.study_days.includes(day.value) ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => toggleStudyDay(day.value)}
-                      className="h-9 w-12"
-                    >
-                      {day.label}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label>Topics / Chapters (one per line)</Label>
-                <Textarea
-                  placeholder={"Chapter 1: Introduction\nChapter 2: Linear Algebra\nChapter 3: Calculus\nChapter 4: Statistics"}
-                  value={form.topics}
-                  onChange={(e) => setForm({ ...form, topics: e.target.value })}
-                  rows={6}
-                />
-              </div>
-
-              <Button onClick={handleGenerate} variant="secondary" className="w-full">
-                Generate Schedule
-              </Button>
-
-              {preview && (
-                <>
-                  <Separator />
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-sm">Generated Schedule</h4>
-                    <div className="space-y-1.5 max-h-60 overflow-y-auto">
-                      {preview.map((item, i) => (
-                        <div key={i} className="flex items-center gap-3 p-2 rounded bg-muted/50 text-sm">
-                          <Badge variant="outline" className="text-xs shrink-0">
-                            {format(item.date, 'MMM d')}
-                          </Badge>
-                          <span>{item.topic}</span>
-                        </div>
-                      ))}
-                    </div>
+              <div className="mt-8">
+                <div className="mb-3 flex items-end justify-between">
+                  <div>
+                    <p className="font-black">Overall progress</p>
+                    <p className="text-sm text-slate-500 dark:text-white/45">{completedItems} of {items.length} topics completed</p>
                   </div>
-                </>
+                  <span className="text-3xl font-black text-emerald-500">{progress}%</span>
+                </div>
+                <div className="h-4 overflow-hidden rounded-full bg-slate-100 dark:bg-white/10">
+                  <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-300 transition-all duration-700" style={{ width: `${progress}%` }} />
+                </div>
+              </div>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+              {[
+                { label: 'Subject', value: activePlan.subject?.name || 'General', icon: BookOpen },
+                { label: 'Topics', value: items.length.toString(), icon: ListOrdered },
+                { label: 'Completed', value: completedItems.toString(), icon: Check },
+                { label: 'Pace', value: daysLeft > 0 ? `${Math.ceil((items.length - completedItems) / Math.max(1, daysLeft))}/day` : 'Final', icon: Timer },
+              ].map((stat) => (
+                <div key={stat.label} className="rounded-[28px] border border-white/70 bg-white/82 p-5 shadow-xl shadow-emerald-950/5 backdrop-blur-2xl dark:border-white/10 dark:bg-white/8">
+                  <stat.icon className="mb-4 h-5 w-5 text-emerald-500" />
+                  <p className="text-2xl font-black">{stat.value}</p>
+                  <p className="text-xs font-bold text-slate-500 dark:text-white/45">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="rounded-[32px] border border-white/70 bg-white/82 p-5 shadow-xl shadow-emerald-950/5 backdrop-blur-2xl dark:border-white/10 dark:bg-white/8 sm:p-6">
+            <div className="mb-6 flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-black">Schedule timeline</h2>
+                <p className="text-sm text-slate-500 dark:text-white/45">Topic blocks ordered by scheduled date.</p>
+              </div>
+              <CalendarDays className="h-5 w-5 text-emerald-500" />
+            </div>
+
+            <div className="relative space-y-4">
+              {items.length === 0 ? (
+                <div className="rounded-3xl border border-dashed border-slate-200 p-10 text-center text-sm font-semibold text-slate-400 dark:border-white/10">No scheduled topics yet.</div>
+              ) : (
+                items.map((item) => {
+                  const today = isToday(parseISO(item.scheduled_date))
+                  return (
+                    <div key={item.id} className="grid gap-3 rounded-3xl border border-slate-100 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-black/18 sm:grid-cols-[92px_1fr] sm:p-5">
+                      <div className={cn('flex h-16 items-center justify-center rounded-2xl text-center text-sm font-black', today ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-500 dark:bg-white/10 dark:text-white/55')}>
+                        <div>
+                          <p>{format(parseISO(item.scheduled_date), 'EEE')}</p>
+                          <p className="text-xs opacity-75">{format(parseISO(item.scheduled_date), 'MMM d')}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-4">
+                        <div className={cn('mt-1 grid h-7 w-7 shrink-0 place-items-center rounded-xl border-2', item.is_completed ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-slate-200 dark:border-white/20')}>
+                          {item.is_completed && <Check className="h-4 w-4" />}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="font-black">{item.topic}</p>
+                          <div className="mt-2 flex flex-wrap gap-3 text-xs font-semibold text-slate-500 dark:text-white/45">
+                            <span className="inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" /> 1.5 hrs</span>
+                            <span className="inline-flex items-center gap-1"><FileText className="h-3.5 w-3.5" /> Review + Quiz</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })
               )}
             </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => { setCreateOpen(false); setPreview(null) }}>
-                Cancel
-              </Button>
-              <Button onClick={handleSave} disabled={!preview || saving}>
-                {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Save Plan
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </div>
+          </section>
+        </>
+      )}
 
-      {plans.length === 0 ? (
-        <Card className="border-dashed border-2 border-border/50">
-          <CardContent className="flex flex-col items-center justify-center py-16">
-            <CalendarDays className="h-16 w-16 text-muted-foreground/30 mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No study plans yet</h3>
-            <p className="text-sm text-muted-foreground text-center max-w-sm mb-4">
-              Create a study plan by entering your topics and exam date. We&apos;ll distribute them evenly across your study days.
-            </p>
-            <Button onClick={() => setCreateOpen(true)}>
-              <Plus className="mr-2 h-4 w-4" />
-              Create Plan
-            </Button>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Plan List */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wider">Your Plans</h3>
-            {plans.map((plan) => {
-              const daysLeft = differenceInDays(parseISO(plan.exam_date), new Date())
-              const items = planItems[plan.id] || []
-              const completed = items.filter((i) => i.is_completed).length
-              const progress = items.length > 0 ? Math.round((completed / items.length) * 100) : 0
-
-              return (
-                <Card
-                  key={plan.id}
-                  className={`cursor-pointer transition-all border-border/50 hover:shadow-md ${
-                    viewPlanId === plan.id ? 'ring-2 ring-primary' : ''
-                  }`}
-                  onClick={() => setViewPlanId(plan.id)}
-                >
-                  <CardHeader className="pb-2">
-                    <div className="flex items-start justify-between">
-                      <CardTitle className="text-base">{plan.title}</CardTitle>
-                      <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7"
-                          onClick={() => togglePublic(plan)}
-                          title={plan.is_public ? 'Make private' : 'Make public'}
-                        >
-                          <Share2 className={`h-3.5 w-3.5 ${plan.is_public ? 'text-primary' : ''}`} />
-                        </Button>
-                        {plan.is_public && plan.share_slug && (
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-7 w-7"
-                            onClick={() => copyShareLink(plan.share_slug!)}
-                          >
-                            <Copy className="h-3.5 w-3.5" />
-                          </Button>
-                        )}
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-7 w-7 text-destructive"
-                          onClick={() => deletePlan(plan.id)}
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <span>Exam: {format(parseISO(plan.exam_date), 'MMM d, yyyy')}</span>
-                      <span>•</span>
-                      <Badge variant={daysLeft <= 3 ? 'destructive' : 'secondary'} className="text-xs">
-                        {daysLeft <= 0 ? 'Exam passed' : `${daysLeft}d left`}
-                      </Badge>
-                      {plan.is_public && (
-                        <Badge variant="outline" className="text-xs text-primary border-primary/30">
-                          Public
-                        </Badge>
-                      )}
-                    </div>
-                    {/* Progress bar */}
-                    <div className="mt-3">
-                      <div className="flex items-center justify-between text-xs mb-1">
-                        <span className="text-muted-foreground">{completed}/{items.length} topics</span>
-                        <span className="font-medium">{progress}%</span>
-                      </div>
-                      <div className="h-1.5 rounded-full bg-muted overflow-hidden">
-                        <div
-                          className="h-full rounded-full bg-primary transition-all duration-300"
-                          style={{ width: `${progress}%` }}
-                        />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              )
-            })}
-          </div>
-
-          {/* Plan Detail */}
-          <div>
-            {viewPlanId ? (
-              <Card className="border-border/50 sticky top-20">
-                <CardHeader>
-                  <CardTitle className="text-lg">
-                    {plans.find((p) => p.id === viewPlanId)?.title}
-                  </CardTitle>
-                  <CardDescription>Check off topics as you study</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 max-h-[60vh] overflow-y-auto">
-                    {(planItems[viewPlanId] || []).map((item) => (
-                      <div
-                        key={item.id}
-                        className={`flex items-center gap-3 p-2.5 rounded-lg border transition-colors ${
-                          item.is_completed
-                            ? 'bg-primary/5 border-primary/10'
-                            : 'border-border/50 hover:bg-muted/50'
-                        }`}
-                      >
-                        <Checkbox
-                          checked={item.is_completed}
-                          onCheckedChange={() => toggleItem(item)}
-                        />
-                        <div className="flex-1 min-w-0">
-                          <p className={`text-sm ${item.is_completed ? 'line-through text-muted-foreground' : ''}`}>
-                            {item.topic}
-                          </p>
-                        </div>
-                        <Badge variant="outline" className="text-xs shrink-0">
-                          {format(parseISO(item.scheduled_date), 'MMM d')}
-                        </Badge>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <Card className="border-dashed border-2 border-border/50">
-                <CardContent className="flex flex-col items-center justify-center py-16">
-                  <Eye className="h-12 w-12 text-muted-foreground/30 mb-3" />
-                  <p className="text-sm text-muted-foreground">Select a plan to view details</p>
-                </CardContent>
-              </Card>
-            )}
+      {createOpen && (
+        <div className="fixed inset-0 z-[80] grid place-items-center bg-black/60 p-4 text-white backdrop-blur-xl">
+          <div className="w-full max-w-2xl rounded-[32px] border border-white/10 bg-[#081411] p-6 shadow-2xl">
+            <div className="mb-5 flex items-center justify-between">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-white/40">Study plan</p>
+                <h2 className="text-xl font-black">Create study plan</h2>
+              </div>
+              <button onClick={() => setCreateOpen(false)} className="grid h-10 w-10 place-items-center rounded-2xl bg-white/10">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="grid gap-4">
+              <input value={form.title} onChange={(event) => setForm({ ...form, title: event.target.value })} placeholder="Plan title" className="h-12 rounded-2xl border border-white/10 bg-white/10 px-4 font-semibold outline-none placeholder:text-white/35" />
+              <div className="grid gap-3 sm:grid-cols-2">
+                <select value={form.subject_id} onChange={(event) => setForm({ ...form, subject_id: event.target.value })} className="h-12 rounded-2xl border border-white/10 bg-white/10 px-4 font-semibold outline-none">
+                  <option className="text-slate-950" value="">No subject</option>
+                  {subjects.map((subject) => <option className="text-slate-950" key={subject.id} value={subject.id}>{subject.name}</option>)}
+                </select>
+                <input type="date" value={form.exam_date} onChange={(event) => setForm({ ...form, exam_date: event.target.value })} className="h-12 rounded-2xl border border-white/10 bg-white/10 px-4 font-semibold outline-none" />
+              </div>
+              <textarea value={form.topics} onChange={(event) => setForm({ ...form, topics: event.target.value })} placeholder="One topic per line" className="min-h-40 rounded-2xl border border-white/10 bg-white/10 p-4 font-semibold outline-none placeholder:text-white/35" />
+              <button onClick={createPlan} disabled={saving} className="mt-2 min-h-12 rounded-2xl bg-white text-sm font-black text-emerald-950 disabled:opacity-50">
+                {saving ? 'Creating...' : 'Create plan'}
+              </button>
+            </div>
           </div>
         </div>
       )}
-
-      <p className="text-xs text-muted-foreground text-center">
-        {plans.length} / 5 study plans (Free plan)
-      </p>
     </div>
   )
 }

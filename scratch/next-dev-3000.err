@@ -1,0 +1,528 @@
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+Error: Can't resolve './custom-theme.css' in 'C:\Users\sanja\.gemini\antigravity\scratch\studyflow'
+    [2m[at finishWithoutResolve (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:942:18)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1034:14][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:94:43][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m
+    [2m[at eval (eval at create (C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\sanja\.gemini\antigravity\scratch\studyflow\node_modules\enhanced-resolve\lib\Resolver.js:1111:5][0m {
+  details: "resolve './custom-theme.css' in 'C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow'\n" +
+    '  using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: .)\n' +
+    '    using description file: C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\package.json (relative path: ./custom-theme.css)\n' +
+    '      no extension\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist\n" +
+    '      .css\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css.css doesn't exist\n" +
+    '      as directory\n' +
+    "        C:\\Users\\sanja\\.gemini\\antigravity\\scratch\\studyflow\\custom-theme.css doesn't exist"
+}
+
+<--- Last few GCs --->
+
+[75392:0000024FEB3A7000]     8281 ms: Scavenge 8.7 (11.9) -> 7.4 (9.3) MB, pooled: 2 MB, 3.56 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+
+
+
+FATAL ERROR: Committing semi space failed. Allocation failed - JavaScript heap out of memory
+#
+----- Native stack trace -----
+# Fatal process out of memory: Re-embedded builtins: set permissions
+
+
+#
+
+----- Native stack trace -----
+#
+
+# Fatal process out of memory: Re-embedded builtins: set permissions
+#
+----- Native stack trace -----
+
+ 1: 00007FF71312C13D 
+ 2: 00007FF7145793B6 
+ 3: 00007FF713E1AFF6 
+ 4: 00007FF713C820DE 
+ 5: 00007FF713CB55EF 
+ 6: 00007FF713CB60A2 
+ 7: 00007FF713CB6A82 
+ 8: 00007FF7137B3FE3 
+ 9: 00007FF713E461D6 
+10: 00007FF7132E086D 
+11: 00007FF713042B54 
+12: 00007FF713041EE9 
+13: 00007FF71304BDD0 
+14: 00007FF713E70386 
+15: 00007FF7150B1333 
+16: 00007FFBF877E957 
+17: 00007FFBFA42427C 
+ 1: 00007FF7131D7DBF node::OnFatalError+1343
+ 2: 00007FF713E1B017 v8::Function::NewInstance+423
+ 3: 00007FF713C1B8C7 v8::base::AddressSpaceReservation::AddressSpaceReservation+322071
+ 4: 00007FF713BB42EB v8::Platform::SystemClockTimeMillis+491051
+ 5: 00007FF713B8BD3E v8::Platform::SystemClockTimeMillis+325758
+ 6: 00007FF713C1E362 v8::base::AddressSpaceReservation::AddressSpaceReservation+332978
+ 7: 00007FF713C1D317 v8::base::AddressSpaceReservation::AddressSpaceReservation+328807
+ 8: 00007FF713C2E282 v8::internal::StrongRootAllocatorBase::deallocate_impl+15858
+ 9: 00007FF713C2DDAB v8::internal::StrongRootAllocatorBase::deallocate_impl+14619
+10: 00007FF715095B6D v8::base::UnsignedDivisionByConstant<unsigned __int64>+2791341
+11: 00007FF713C19390 v8::base::AddressSpaceReservation::AddressSpaceReservation+312544
+12: 00007FF713C33C1A X509_STORE_set_cleanup+5098
+13: 00007FF713C3F9F8 uv_timer_set_repeat+18968
+14: 00007FF713C5BADA uv_timer_set_repeat+133882
+15: 00007FF7139489F5 v8::RegExp::GetFlags+142229
+16: 00007FF71394897D v8::RegExp::GetFlags+142109
+17: 00007FF713954BCA v8::RegExp::GetFlags+191850
+18: 00007FF713957755 v8::RegExp::GetFlags+202997
+19: 00007FF713953FF4 v8::RegExp::GetFlags+188820
+20: 00007FF713953E3D v8::RegExp::GetFlags+188381
+21: 00007FF713959258 v8::RegExp::GetFlags+209912
+22: 00007FF713961E53 v8::RegExp::GetFlags+245747
+23: 00007FF713945C91 v8::RegExp::GetFlags+130609
+24: 00007FF7139454C9 v8::RegExp::GetFlags+128617
+25: 00007FF7139C237B v8::RegExp::GetFlags+640283
+26: 00007FF7139CC184 v8::RegExp::GetFlags+680740
+27: 00007FF71380F616 v8::String::Value::~Value+128822
+28: 00007FF71380F531 v8::String::Value::~Value+128593
+29: 00007FF71380DFB3 v8::String::Value::~Value+123091
+30: 0000024FA7E7733A 
+ 1: 00007FF71312C13D 
+ 2: 00007FF7145793B6 
+ 3: 00007FF713E1AFF6 
+ 4: 00007FF713C820DE 
+ 5: 00007FF713CB55EF 
+ 6: 00007FF713CB60A2 
+ 7: 00007FF713CB6A82 
+ 8: 00007FF7137B3FE3 
+ 9: 00007FF713E461D6 
+10: 00007FF7132E086D 
+11: 00007FF713042B54 
+12: 00007FF713041EE9 
+13: 00007FF71304BDD0 
+14: 00007FF713E70386 
+15: 00007FF7150B1333 
+16: 00007FFBF877E957 BaseThreadInitThunk+23
+17: 00007FFBFA42427C RtlUserThreadStart+44
