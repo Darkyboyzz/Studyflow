@@ -392,18 +392,42 @@ function TimerPageContent() {
   }, [pauseAudioStream])
 
   const timeline = useMemo(() => {
-    const items: Array<{ phase: Phase; label: string; done: boolean; active: boolean }> = []
+    const items: Array<{
+      phase: Phase
+      label: string
+      done: boolean
+      active: boolean
+      targetCompletedSessions: number
+    }> = []
     for (let index = 1; index <= settings.longBreakInterval; index++) {
-      items.push({ phase: 'focus', label: `F${index}`, done: completedFocusSessions >= index, active: phase === 'focus' && completedFocusSessions + 1 === index })
+      items.push({
+        phase: 'focus',
+        label: `F${index}`,
+        done: completedFocusSessions >= index,
+        active: phase === 'focus' && completedFocusSessions + 1 === index,
+        targetCompletedSessions: index - 1,
+      })
       items.push({
         phase: index === settings.longBreakInterval ? 'longBreak' : 'shortBreak',
         label: index === settings.longBreakInterval ? 'LB' : 'SB',
         done: completedFocusSessions > index,
         active: phase !== 'focus' && completedFocusSessions === index,
+        targetCompletedSessions: index,
       })
     }
     return items
   }, [completedFocusSessions, phase, settings.longBreakInterval])
+
+  function handleTimelineClick(targetCompletedSessions: number, targetPhase: Phase) {
+    setRunning(false)
+    pauseAudioStream()
+    setCompletedFocusSessions(targetCompletedSessions)
+    setPhase(targetPhase)
+    setSecondsLeft(phaseDuration(settings, targetPhase))
+    
+    const phaseLabel = targetPhase === 'focus' ? 'Focus Block' : targetPhase === 'shortBreak' ? 'Short Break' : 'Long Break'
+    toast.success(`Jumped directly to ${phaseLabel}!`)
+  }
 
   function updateSettings(next: Settings) {
     setSettings(next)
@@ -604,17 +628,25 @@ function TimerPageContent() {
                 {timeline.map((item, index) => {
                   const Icon = item.phase === 'focus' ? Brain : item.phase === 'longBreak' ? Zap : Coffee
                   return (
-                    <div key={`${item.label}-${index}`} className="flex min-w-12 flex-1 flex-col items-center gap-2">
+                    <button
+                      key={`${item.label}-${index}`}
+                      onClick={() => handleTimelineClick(item.targetCompletedSessions, item.phase)}
+                      className="flex min-w-12 flex-1 flex-col items-center gap-2 group outline-none"
+                    >
                       <div
                         className={cn(
-                          'grid h-11 w-11 place-items-center rounded-2xl border text-white/50 transition duration-300 active:scale-95',
-                          item.active ? 'scale-110 border-white bg-white text-emerald-950 shadow-lg' : item.done ? 'border-emerald-300/40 bg-emerald-400/20 text-emerald-300' : 'border-white/10 bg-black/16'
+                          'grid h-11 w-11 place-items-center rounded-2xl border text-white/50 transition-all duration-300 cursor-pointer shadow-sm',
+                          item.active 
+                            ? 'scale-110 border-white bg-white text-emerald-950 shadow-lg' 
+                            : item.done 
+                              ? 'border-emerald-300/40 bg-emerald-400/20 text-emerald-300 hover:bg-emerald-400/30 hover:border-emerald-300/60' 
+                              : 'border-white/10 bg-black/16 hover:border-white/30 hover:bg-white/10 hover:scale-105 active:scale-95'
                         )}
                       >
                         {item.done ? <Check className="h-4 w-4 stroke-[3]" /> : <Icon className="h-4 w-4" />}
                       </div>
-                      <span className="text-[9px] font-black tracking-wider text-white/45">{item.label}</span>
-                    </div>
+                      <span className="text-[9px] font-black tracking-wider text-white/45 group-hover:text-white/80 transition duration-150">{item.label}</span>
+                    </button>
                   )
                 })}
               </div>
