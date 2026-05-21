@@ -1,5 +1,5 @@
 {
-  "packageId": "app.vercel.studyflow_roan_nine.twa",
+  "packageId": "com.studyflow.app",
   "host": "studyflow-roan-nine.vercel.app",
   "name": "StudyFlow",
   "launcherName": "StudyFlow",
@@ -13,7 +13,7 @@
   "backgroundColor": "#07120F",
   "enableNotifications": true,
   "startUrl": "https://studyflow-roan-nine.vercel.app/",
-  "iconUrl": "https://kommodo.ai/i/MLailKJepTkwHUC7sejB",
+  "iconUrl": "https://studyflow-roan-nine.vercel.app/logo.png",
   "maskableIconUrl": "https://studyflow-roan-nine.vercel.app/logo.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {

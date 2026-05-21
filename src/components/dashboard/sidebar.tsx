@@ -61,8 +61,13 @@ export function DashboardSidebar({ isDeepFocus = false }: { isDeepFocus?: boolea
         <div className="absolute inset-0 -z-10 rounded-[28px] bg-[radial-gradient(circle_at_30%_0%,rgba(52,211,153,0.22),transparent_34%),radial-gradient(circle_at_90%_20%,rgba(14,165,233,0.18),transparent_28%)]" />
 
         <div className="mb-7 flex items-center justify-between px-2 pt-1">
-          <Link href="/dashboard" className="flex h-11 w-40 items-center overflow-hidden rounded-2xl bg-white/95 px-2 shadow-lg shadow-black/20">
-            <Image src="/logo-wide.png" alt="StudyFlow" width={172} height={44} className="h-auto w-full object-contain" priority />
+          <Link href="/dashboard" className="flex items-center gap-3 transition hover:opacity-90">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 p-1.5 backdrop-blur-md border border-white/10 shadow-inner">
+              <Image src="/logo.png" alt="StudyFlow" width={28} height={28} className="object-contain" priority />
+            </div>
+            <span className="font-display text-xl font-black tracking-tight bg-gradient-to-r from-emerald-100 to-emerald-300 bg-clip-text text-transparent">
+              StudyFlow
+            </span>
           </Link>
           <button
             type="button"
