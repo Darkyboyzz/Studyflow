@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/components/providers/auth-provider'
 import { createClient } from '@/lib/supabase/client'
 import { 
-  Sparkles, 
   ArrowRight, 
   User, 
   GraduationCap, 

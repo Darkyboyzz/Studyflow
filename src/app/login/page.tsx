@@ -7,7 +7,7 @@ import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/components/providers/auth-provider'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Loader2, Sparkles, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { Loader2, ArrowRight, CheckCircle2 } from 'lucide-react'
 import { toast } from 'sonner'
 import Image from 'next/image'
 

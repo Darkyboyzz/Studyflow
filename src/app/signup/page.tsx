@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/components/providers/auth-provider'
 import { Label } from '@/components/ui/label'
-import { Loader2, Sparkles, Mail, Lock, CheckCircle2 } from 'lucide-react'
+import { Loader2, Mail, Lock, CheckCircle2 } from 'lucide-react'
 import { toast } from 'sonner'
 import Image from 'next/image'
 
